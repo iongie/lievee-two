@@ -1,0 +1,184 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <strong>Form Data</strong>
+            </div>
+            <form  
+                class="form-horizontal"
+                #f="ngForm" 
+                name="form"
+                (submit)="onSubmit()">
+
+                <div class="card-body">
+                    <div class="form-group row">
+                        <!-- <label class="col-md-3 col-form-label">Photo</label> -->
+                        <div class="col-md-12" data-toggle="modal" (click)="largeModal.show()">
+                                
+                                <div 
+                                 class="rounded-circle z-depth-2"
+                                 style="
+                                 position: relative;
+                                 width: 250px; 
+                                 height: 250px;  
+                                 display: block;
+                                 margin-left: auto;
+                                 margin-right: auto;
+                                 background-color: darkcyan;">
+
+                                    <img 
+                                    class="rounded-circle z-depth-2" 
+                                    style="
+                                    width: 250px; 
+                                    height: 250px;  
+                                    display: block;
+                                    margin-left: auto;
+                                    margin-right: auto;"
+                                    [src]="photo"
+                                    data-holder-rendered="true">
+
+                                    <div 
+                                    class="
+                                    rounded-circle 
+                                    z-depth-2"
+                                    style="
+                                    background-color: darkcyan;
+                                    position: absolute;
+                                    width: 60px;
+                                    height: 60px;
+                                    right: 16px;
+                                    bottom: 8px;">
+                                        <i 
+                                        class="fa fa-camera fa-10x" 
+                                        aria-hidden="true"
+                                        style="
+                                        font-size: 32px;
+                                        color: white;
+                                        margin-top: 15px;
+                                        margin-left: 13px;"></i>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">Name</label>
+                        <div class="col-md-9">
+                            <input 
+                            type="text" 
+                            id="name" 
+                            name="name"
+                            [(ngModel)]="formVisitor.name"
+                            class="form-control"
+                            [ngClass]="{ 'is-invalid': f.submitted && name.invalid }"
+                            required
+                            #name="ngModel">
+                            <div *ngIf="f.submitted && name.invalid" class="invalid-feedback">
+                                <div  *ngIf="name.errors.required" >
+                                    Name is request.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">Company</label>
+                        <div class="col-md-9">
+                            <input 
+                            type="text" 
+                            id="company" 
+                            name="company"
+                            [(ngModel)]="formVisitor.company" 
+                            class="form-control"
+                            [ngClass]="{ 'is-invalid': f.submitted && company.invalid }"
+                            required
+                            #company="ngModel">
+                            <div *ngIf="f.submitted && company.invalid" class="invalid-feedback">
+                                <div *ngIf="company.errors.required">Company is required</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">Gender</label>
+                        <div class="col-md-9">
+                            <select 
+                            id="gender" 
+                            name="gender"
+                            [(ngModel)]="formVisitor.gender"
+                            class="form-control"
+                            [ngClass]="{ 'is-invalid': f.submitted && gender.invalid }"
+                            required
+                            #gender="ngModel">
+                                <option value=""></option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                            <div *ngIf="f.submitted && gender.invalid" class="invalid-feedback">
+                                <div *ngIf="gender.errors.required">Gender is required</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="mobilePhone">Mobile Phone</label>
+                        <div class="col-md-9">
+                            <input 
+                            type="text"
+                            appPhoneMask
+                            id="phoneNumber" 
+                            name="phoneNumber"
+                            [(ngModel)]="formVisitor.phoneNumber" 
+                            class="form-control"
+                            [ngClass]="{ 'is-invalid': f.submitted && phoneNumber.invalid }"
+                            required
+                            #phoneNumber="ngModel">
+                            <div *ngIf="f.submitted && phoneNumber.invalid" class="invalid-feedback">
+                                <div *ngIf="phoneNumber.errors.required">Phone number is required</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Submit</button>
+                    <button type="reset" (click)="reset()" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Reset</button>
+                    <div class="col-md-12" style="margin-top: 10px;">
+                        <alert type="success" *ngIf="alertNotifSuccess == true">
+                            <strong>Done!</strong> You successfully created data.
+                        </alert>
+
+                        <alert type="danger" *ngIf="alertNotifNotSuccess == true">
+                        <strong>Failed!</strong> You failed to create data.
+                        </alert>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div bsModal #largeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">Take a photo</h4>
+            <button type="button" class="close" (click)="largeModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <webcam [height]="300" [width]="300" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
+            [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
+            [videoOptions]="videoOptions"
+            [imageQuality]="1"
+            (cameraSwitched)="cameraWasSwitched($event)"
+            
+            (initError)="handleInitError($event)"></webcam>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-primary" (click)="triggerSnapshot()" (click)="largeModal.hide()">Save</button>
+            <button type="button" class="btn btn-sm btn-danger" (click)="largeModal.hide()"><i class="fa fa-ban"></i>Close</button>
+        </div>
+        </div>
+    </div>
+</div>
