@@ -44,29 +44,21 @@ export class ListComponent implements OnInit, OnDestroy {
 
   loadMore() {
     let visitorLenght = this.visitor.length;
+    let banding = this.itemData.length-visitorLenght; 
     this.addPage = 3;
-    this.page = visitorLenght+this.addPage;
+    if (banding < this.addPage ) {
+      this.page = visitorLenght+banding;
+    } else {
+      this.page = visitorLenght+this.addPage;
+    }
     this.visitor = this.itemData.slice(0, this.page);
-    Promise.all(this.visitor).then(result => {
-      console.log('result', result);
-      
-    })
-    console.log('page', this.page);
-    console.log('visitor.length', this.visitor.length);
-    console.log('itemData.length', this.itemData.length);
-   
-    
-    // this.buttonLoadMore(this.visitor, this.itemData, this.page);
-    
+    this.buttonLoadMore(this.visitor, this.itemData, this.page);  
   }
 
   buttonLoadMore(visitor, itemData, page){
-    console.log('page', page);
-    console.log('visitor.length', visitor.length);
-    console.log('itemData.length', itemData.length);
-    if(visitor.length = page){
+    if(visitor.length < itemData.length){
       this.loadMoreButton = true;
-    } else if(visitor.length < page){
+    } else if(visitor.length = itemData.length){
       this.loadMoreButton = false;
     } else {
       this.loadMoreButton = false;
