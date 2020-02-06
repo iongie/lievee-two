@@ -8,7 +8,7 @@
                 class="form-horizontal"
                 #f="ngForm" 
                 name="form"
-                (submit)="onSubmit()">
+                (submit)="f.form.valid && !checkPhone && onSubmit()">
 
                 <div class="card-body">
                     <div class="form-group row">
@@ -98,8 +98,32 @@
                             </div>
                         </div>
                     </div>
-    
+
                     <div class="form-group row">
+                        <label class="col-md-3 col-form-label">Email</label>
+                        <div class="col-md-9">
+                            <input 
+                            type="email" 
+                            id="email" 
+                            name="email"
+                            [(ngModel)]="formVisitor.email"
+                            class="form-control"
+                            [ngClass]="{ 'is-invalid': f.submitted && email.invalid }"
+                            required
+                            #email="ngModel"
+                            email>
+                            <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+                                <div  *ngIf="email.errors.required" >
+                                    Email is request.
+                                </div>
+                                <div  *ngIf="email.errors.email" >
+                                    Email must be a valid email address
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <!-- <div class="form-group row">
                         <label class="col-md-3 col-form-label">Gender</label>
                         <div class="col-md-9">
                             <select 
@@ -118,7 +142,7 @@
                                 <div *ngIf="gender.errors.required">Gender is required</div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
     
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label" for="mobilePhone">Mobile Phone</label>
@@ -132,16 +156,22 @@
                             class="form-control"
                             [ngClass]="{ 'is-invalid': f.submitted && phoneNumber.invalid }"
                             required
-                            #phoneNumber="ngModel">
+                            #phoneNumber="ngModel"
+                            (ngModelChange)="checkPhoneNumber($event)">
                             <div *ngIf="f.submitted && phoneNumber.invalid" class="invalid-feedback">
                                 <div *ngIf="phoneNumber.errors.required">Phone number is required</div>
+                            </div>
+                            <div *ngIf="checkPhone">
+                                <div style="font-size: small; color: red;">Phone number is registerted</div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="card-footer">
+                    <!-- <button type="submit" [disabled]="!f.form.valid" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Submit</button> -->
                     <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Submit</button>
                     <button type="reset" (click)="reset()" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Reset</button>
+                    <button type="button" (click)="goToList()" class="btn btn-sm btn-success"><i class="fa fa-list"></i> List</button>
                     <div class="col-md-12" style="margin-top: 10px;">
                         <alert type="success" *ngIf="alertNotifSuccess == true">
                             <strong>Done!</strong> You successfully created data.

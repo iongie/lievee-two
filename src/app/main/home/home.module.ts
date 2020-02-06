@@ -13,16 +13,29 @@ const routes: Routes = [
     data: {
       title: 'Visitor'
     },
-    component: HomeComponent,
-    // children: [
-    //   {
-    //     path: '',
-    //     data: {
-    //       title: 'All'
-    //     },
-    //     component: HomeComponent,
-    //   }
-    // ]
+    children: [
+      {
+        path: '',
+        data: {
+          title: 'Add'
+        },
+        component: HomeComponent,
+      },
+      {
+        path: 'success-registered',
+        data: {
+          title: 'Success Registered'
+        },
+        loadChildren: () => import('../home/thanks/thanks.module').then(m => m.ThanksModule),
+      },
+      {
+        path: 'list',
+        data: {
+          title: 'List'
+        },
+        loadChildren: () => import('../home/list/list.module').then(m => m.ListModule),
+      },
+    ]
   }
 ];
 

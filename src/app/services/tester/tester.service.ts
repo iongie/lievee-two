@@ -14,7 +14,7 @@ const httpOptions = {
 })
 export class TesterService implements OnDestroy {
   private url = environment.baseApi;
-  private urlHotel = environment.baseHotel;
+  private urlVisitor = environment.baseHotel;
   private subs: Subject<void> = new Subject();
   private _refresh = new Subject();
   constructor(
@@ -50,15 +50,28 @@ export class TesterService implements OnDestroy {
     return this._refresh;
   }
 
-  create(order: any): Observable<any> {
-    return this.http.post<any>(this.url + '/tester/create', order).pipe(
+  create(visitor: any): Observable<any> {
+    return this.http.post<any>(this.urlVisitor + '/tester/create', visitor).pipe(
       catchError(this.handleError),
     );
   }
 
-  createVisitor(order: any): Observable<any> {
-    return this.http.post<any>(this.urlHotel + '/visitor/add', order).pipe(
+  createVisitor(visitor: any): Observable<any> {
+    return this.http.post<any>(this.urlVisitor + '/visitor/add', visitor).pipe(
       catchError(this.handleError),
     );
   }
+
+  checkPhoneNumber(visitor: any): Observable<any> {
+    return this.http.post<any>(this.urlVisitor + '/visitor/check/phone', visitor).pipe(
+      catchError(this.handleError),
+    );
+  }
+
+  read(): Observable<any[]> {
+    return this.http.get<any[]>(this.urlVisitor + '/visitor', httpOptions).pipe(
+      catchError(this.handleError),
+    );
+  }
+  
 }
