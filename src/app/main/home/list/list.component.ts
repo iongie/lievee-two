@@ -56,7 +56,12 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   buttonLoadMore(visitor, itemData, page){
-    if(visitor.length < itemData.length){
+    console.log('visitor', visitor.length);
+    console.log('itemData', itemData.length);
+    console.log('page', page);
+    if(visitor.length < page ){
+      this.loadMoreButton = false;
+    }else if(visitor.length < itemData.length){
       this.loadMoreButton = true;
     } else if(visitor.length = itemData.length){
       this.loadMoreButton = false;
