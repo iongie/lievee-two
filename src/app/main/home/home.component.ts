@@ -3,8 +3,8 @@ import { ModalDirective } from 'ngx-bootstrap';
 import { WebcamInitError, WebcamUtil, WebcamImage, WebcamMirrorProperties } from 'ngx-webcam';
 import { Subject, Observable } from 'rxjs';
 import { TesterService } from '../../services/tester/tester.service';
-import { takeUntil } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { takeUntil, filter } from 'rxjs/operators';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -43,10 +43,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   checkPhone = false;
   checkEmail = false;
   private subs: Subject<void> = new Subject();
+
+
   constructor(
     private testerServ: TesterService,
-    private router: Router
-  ) { }
+    private router: Router,
+  ) {}
 
   ngOnInit() {
     WebcamUtil.getAvailableVideoInputs()
@@ -168,6 +170,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   goToList(){
     this.router.navigate(['/visitor/list'], { skipLocationChange: true })
   }
+
+  
 
 
 }

@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Subject, throwError, Observable } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { catchError } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 
@@ -20,6 +20,7 @@ export class TesterService implements OnDestroy {
   constructor(
     public http: HttpClient,
     public router: Router,
+    public activatedRoute: ActivatedRoute,
   ) { }
 
   ngOnDestroy() {
@@ -72,6 +73,15 @@ export class TesterService implements OnDestroy {
     return this.http.get<any[]>(this.urlVisitor + '/visitor', httpOptions).pipe(
       catchError(this.handleError),
     );
+  }
+
+  isLoggednIn(): boolean {
+    return this.activatedRoute.snapshot.queryParamMap.get('view') !== null;
+  }
+
+  isRole(role: any[]): boolean {
+    const currentUser = this.activatedRoute.snapshot.queryParamMap.get('view');
+    return role.includes(currentUser);
   }
   
 }

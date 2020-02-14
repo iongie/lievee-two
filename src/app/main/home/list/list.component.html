@@ -24,6 +24,7 @@
                                         <th>Email</th>
                                         <th>Phone number</th>
                                         <th>Photo</th>
+                                        <th>QR Code</th>
                                     </tr>
                                 </thead>
                             </table >
@@ -40,6 +41,7 @@
                                     <td>
                                         <img  style="height: 30px; width: 30px;" [src]="visitor.photo" class="rounded-circle z-depth-2">
                                     </td>
+                                    <td>{{visitor.code}}</td>
                                   </tr>
                                 </tbody>
                             </table>

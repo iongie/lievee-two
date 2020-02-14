@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { TesterService } from '../../../services/tester/tester.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -17,13 +17,22 @@ export class ListComponent implements OnInit, OnDestroy {
   addPage;
   loadMoreButton = false;
   private subs: Subject<void> = new Subject();
+
+  random: string;
   constructor(
     private testerServ: TesterService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
     this.get();
+    if (this.route.snapshot.queryParamMap.get('view') != null) {
+      console.log('no null');
+      
+    }
+    const nlog = this.route.snapshot.queryParamMap.get('view');
+    console.log(nlog);
   }
 
   ngOnDestroy() {
@@ -35,6 +44,7 @@ export class ListComponent implements OnInit, OnDestroy {
     this.testerServ.read()
     .pipe(takeUntil(this.subs))
     .subscribe(res => {
+      console.log(res);
       this.itemData= res;
       this.page = 15;
       this.visitor = this.itemData.slice(0, this.page);
