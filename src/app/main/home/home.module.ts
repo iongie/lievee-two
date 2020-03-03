@@ -7,6 +7,7 @@ import { ModalModule, AlertModule } from 'ngx-bootstrap';
 import { WebcamModule } from 'ngx-webcam';
 import { PhoneMaskDirective } from '../../directive/phone-mask.directive';
 import { GuardPageGuard } from '../../services/guard-page/guard-page.guard';
+import { CountryCodeDirective } from '../../directive/countryCode/country-code.directive';
 
 const routes: Routes = [
   {
@@ -50,7 +51,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [HomeComponent, PhoneMaskDirective],
+  declarations: [HomeComponent, PhoneMaskDirective, CountryCodeDirective],
   imports: [
     CommonModule,
     FormsModule,

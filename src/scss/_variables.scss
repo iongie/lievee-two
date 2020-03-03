@@ -1,1 +1,13 @@
 // Variable overrides
+.judul {
+  font-size: 18px;
+  color:#055aa5; 
+  font-weight: bold;
+  margin-top: -5px;
+}
+@media only screen and (max-width: 1026px) {
+  .judul {
+    display: none;
+ 
+  }
+}

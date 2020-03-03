@@ -2,9 +2,9 @@ import { Directive, HostListener } from '@angular/core';
 import { NgControl } from '@angular/forms';
 
 @Directive({
-  selector: '[appPhoneMask]'
+  selector: '[appCountryCode]'
 })
-export class PhoneMaskDirective {
+export class CountryCodeDirective {
 
   constructor(public ngControl: NgControl) { }
 
@@ -28,15 +28,9 @@ export class PhoneMaskDirective {
       newVal = '';
     } else if (newVal.length <= 3) {
       newVal = newVal.replace(/^(\d{0,3})/, '$1');
-    } else if (newVal.length <= 7) {
-      newVal = newVal.replace(/^(\d{0,3})(\d{0,4})/, '$1-$2');
-    } else if (newVal.length <= 11) {
-      newVal = newVal.replace(/^(\d{0,3})(\d{0,4})(\d{0,4})/, '$1-$2-$3');
-    } else if (newVal.length <= 15) {
-      newVal = newVal.replace(/^(\d{0,3})(\d{0,4})(\d{0,4})(\d{0,4})/, '$1-$2-$3-$4');
     } else {
-      newVal = newVal.substring(0, 15);
-      newVal = newVal.replace(/^(\d{0,3})(\d{0,4})(\d{0,4})(\d{0,4})/, '$1-$2-$3-$4');
+      newVal = newVal.substring(0, 3);
+      newVal = newVal.replace(/^(\d{0,3})/, '$1');
     }
     this.ngControl.valueAccessor.writeValue(newVal);
   }

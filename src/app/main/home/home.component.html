@@ -8,6 +8,7 @@
                 class="form-horizontal"
                 #f="ngForm" 
                 name="form"
+                autocomplete="off"
                 (submit)="f.form.valid && !checkPhone && onSubmit()">
 
                 <div class="card-body">
@@ -111,7 +112,8 @@
                             [ngClass]="{ 'is-invalid': f.submitted && email.invalid }"
                             required
                             #email="ngModel"
-                            email>
+                            email
+                            (keydown.tab)="funcCheckEmail(formVisitor.email)">
                             <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
                                 <div  *ngIf="email.errors.required" >
                                     Email is request.
@@ -119,6 +121,9 @@
                                 <div  *ngIf="email.errors.email" >
                                     Email must be a valid email address
                                 </div>
+                            </div>
+                            <div *ngIf="checkEmail">
+                                <div style="font-size: small; color: red;">Email is registered</div>
                             </div>
                         </div>
                     </div>
@@ -146,7 +151,22 @@
     
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label" for="mobilePhone">Mobile Phone</label>
-                        <div class="col-md-9">
+                        <div class="col-md-1 col-sm-3">
+                            <input 
+                            type="text"
+                            appCountryCode
+                            id="countryCode" 
+                            name="countryCode"
+                            [(ngModel)]="formVisitor.countryCode" 
+                            class="form-control"
+                            [ngClass]="{ 'is-invalid': f.submitted && countryCode.invalid }"
+                            required
+                            #countryCode="ngModel">
+                            <div *ngIf="f.submitted && countryCode.invalid" class="invalid-feedback">
+                                <div *ngIf="countryCode.errors.required">Country code phone number is required</div>
+                            </div>
+                        </div>
+                        <div class="col-md-8 col-sm-6">
                             <input 
                             type="text"
                             appPhoneMask
@@ -162,7 +182,7 @@
                                 <div *ngIf="phoneNumber.errors.required">Phone number is required</div>
                             </div>
                             <div *ngIf="checkPhone">
-                                <div style="font-size: small; color: red;">Phone number is registerted</div>
+                                <div style="font-size: small; color: red;">Phone number is registered</div>
                             </div>
                         </div>
                     </div>
@@ -178,7 +198,7 @@
                         </alert>
 
                         <alert type="danger" *ngIf="alertNotifNotSuccess == true">
-                        <strong>Failed!</strong> You failed to create data.
+                        <strong>Failed!</strong>{{alert.message}}
                         </alert>
                     </div>
                 </div>

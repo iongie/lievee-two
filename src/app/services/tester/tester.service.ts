@@ -69,6 +69,12 @@ export class TesterService implements OnDestroy {
     );
   }
 
+  checkEmail(visitor: any): Observable<any> {
+    return this.http.post<any>(this.urlVisitor + '/visitor/check/email', visitor).pipe(
+      catchError(this.handleError),
+    );
+  }
+
   read(): Observable<any[]> {
     return this.http.get<any[]>(this.urlVisitor + '/visitor', httpOptions).pipe(
       catchError(this.handleError),

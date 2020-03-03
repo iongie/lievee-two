@@ -39,6 +39,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   alertNotifSuccess = false;
   alertNotifNotSuccess = false;
+  alert;
   photo;
   checkPhone = false;
   checkEmail = false;
@@ -109,6 +110,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.testerServ.checkPhoneNumber(phoneNumber)
     .pipe(takeUntil(this.subs))
     .subscribe(res => {
+      console.log('res', res);
       if (res == 'Phone number already registered!'){
         this.checkPhone = true;
       } else {
@@ -120,6 +122,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   checkPhoneNumber(ev){
     let evLength = +ev.length;
     switch (evLength){
+      case 12:
+        const data12 = {
+          phoneNumber: ev
+        };
+        this.funcCheckNumber(data12);
+        break;
       case 13:
         const data13 = {
           phoneNumber: ev
@@ -132,7 +140,30 @@ export class HomeComponent implements OnInit, OnDestroy {
         };
         this.funcCheckNumber(data14);
         break;
+      case 15:
+        const data15 = {
+          phoneNumber: ev
+        };
+        this.funcCheckNumber(data15);
+        break;   
     }
+  }
+
+  funcCheckEmail(email) {
+    const data = {
+      email: email
+    };
+    this.testerServ.checkEmail(data)
+    .pipe(takeUntil(this.subs))
+    .subscribe(res => {
+      if (res == 'Email address already registered!'){
+        this.checkEmail = true;
+        console.log(this.checkEmail);
+      } else {
+        this.checkEmail = false;
+        console.log(this.checkEmail);
+      }
+    });
   }
 
   onSubmit() {
@@ -143,15 +174,30 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
     // this.router.navigate(['/visitor/success-registered'], { skipLocationChange: true });
     this.testerServ.createVisitor(this.formVisitor).subscribe(res => {
-      this.alertNotifSuccess = true;
-      this.router.navigate(['/visitor/success-registered'], { skipLocationChange: true });
-      setTimeout(()=>{
-        this.alertNotifSuccess = false;
-        this.webcamImage = null;
-        this.photo = 'assets/img/avatars/blank-profile-picture-973460_960_720.png'
-      }, 3000);
+      if (res == 'Success') {
+        this.alertNotifSuccess = true;
+        this.router.navigate(['/visitor/success-registered'], { skipLocationChange: true });
+        setTimeout(()=>{
+          this.alertNotifSuccess = false;
+          this.webcamImage = null;
+          this.photo = 'assets/img/avatars/blank-profile-picture-973460_960_720.png'
+        }, 3000);
+      } else {
+        this.alertNotifNotSuccess = true;
+        this.alert = {
+          message: res
+        }
+        setTimeout(()=>{
+          this.alertNotifNotSuccess = false;
+          this.webcamImage = null;
+          this.photo = 'assets/img/avatars/blank-profile-picture-973460_960_720.png'
+        }, 3000);
+      }
     }, err => {
       this.alertNotifNotSuccess = true;
+      this.alert = {
+        message:  'You failed to create data.'
+      }
       setTimeout(()=>{
         this.alertNotifNotSuccess = false;
         this.webcamImage = null;

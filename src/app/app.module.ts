@@ -42,6 +42,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts';
 
 import { HttpClientModule } from '@angular/common/http';
+import { CountryCodeDirective } from './directive/countryCode/country-code.directive';
 @NgModule({
   imports: [
     BrowserModule,
@@ -64,7 +65,7 @@ import { HttpClientModule } from '@angular/common/http';
     P404Component,
     P500Component,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
   ],
   providers: [{
     provide: LocationStrategy,
