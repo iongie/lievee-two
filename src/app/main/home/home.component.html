@@ -151,22 +151,7 @@
     
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label" for="mobilePhone">Mobile Phone</label>
-                        <div class="col-md-1 col-sm-3">
-                            <input 
-                            type="text"
-                            appCountryCode
-                            id="countryCode" 
-                            name="countryCode"
-                            [(ngModel)]="formVisitor.countryCode" 
-                            class="form-control"
-                            [ngClass]="{ 'is-invalid': f.submitted && countryCode.invalid }"
-                            required
-                            #countryCode="ngModel">
-                            <div *ngIf="f.submitted && countryCode.invalid" class="invalid-feedback">
-                                <div *ngIf="countryCode.errors.required">Country code phone number is required</div>
-                            </div>
-                        </div>
-                        <div class="col-md-8 col-sm-6">
+                        <div class="col-md-9">
                             <input 
                             type="text"
                             appPhoneMask

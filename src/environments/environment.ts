@@ -5,6 +5,5 @@
 
 export const environment = {
   production: false,
-  baseApi: "https://us-central1-lievee-pos.cloudfunctions.net/api",
   baseHotel: "https://datascrip.project-on.net/api"
 };

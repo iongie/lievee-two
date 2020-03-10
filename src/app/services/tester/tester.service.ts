@@ -13,7 +13,6 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class TesterService implements OnDestroy {
-  private url = environment.baseApi;
   private urlVisitor = environment.baseHotel;
   private subs: Subject<void> = new Subject();
   private _refresh = new Subject();
@@ -88,6 +87,12 @@ export class TesterService implements OnDestroy {
   isRole(role: any[]): boolean {
     const currentUser = this.activatedRoute.snapshot.queryParamMap.get('view');
     return role.includes(currentUser);
+  }
+
+  export(): Observable<any[]> {
+    return this.http.get<any[]>(this.urlVisitor + '/visitor/export', httpOptions).pipe(
+      catchError(this.handleError),
+    );
   }
   
 }
